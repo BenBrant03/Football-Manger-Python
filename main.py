@@ -5,74 +5,83 @@ from csv import reader
 #Veriables
 leagues = ["Premier League" , "La Liga" , "BundesLiga"]
 premierLeague = ["Arsenal" , "Aston Villa" , "Brighton" , "Burnely" , "Chelsea", "Crystal Palace", "Everton", "Fulham" , "Leeds" , "Leicester City" , "Liverpool" , "Manchester City" ,"Manchester United" , "Newcastle" , "Shefield United", "Southampton" ,"Tottenham" ,"West Brom" ,"West Ham","Wolves"]
-leagueTable =[]
-fixturesList = []
-playerTeam  = None
+leagueTable =[] #stores league table values
+fixturesList = [] # stores that weeks fixtures
+playerTeam  = None 
 confirm = False
 run = True
 matchday = 1
 leagueCode = None 
-version = "Pre Alpha 1.1"
+version = "Pre Alpha 1.2"
 playerFixture = None
 
 #Algorithims
-def NewOrLoad():
+def NewOrLoad(): # not in use
   global load
   global new
-  choice = input("Would you like to load your old or start new       ")
+  validinput = False
+  while validinput == True:
+  choice = input("Would you like to load your old or start new\n")
   if choice.lower == "load":
-    with open("team.txt", "r") as teamFile:
-      team = teamFile.read()
-      global playerTeam
-      playerTeam = team
-      return playerTeam
-      teamFile.close()
-    print("Loading " + playerTeam + "Save")
-    global leagueTable
-    with open("leagueTable.txt","r") as LeagueTableFile:
-      contents = LeagueTableFile.read()
-      leagueTable.clear()
-      leagueTable.append(contents)
-      LeagueTableFile.close()
-    return leagueTable
-    print(leagueTable)
+    validinput = True
+    load()
+  elif choice.lower == "new"
+    setup()
 
+def load(): # not currentlu in use
+  with open("team.txt", "r") as teamFile:
+    team = teamFile.read() # Makes the team in the file the player team 
+    global playerTeam
+    playerTeam = team
+    return playerTeam
+    teamFile.close()
+  print("Loading " + playerTeam + "Save")
+  global leagueTable
+  with open("leagueTable.txt","r") as LeagueTableFile:  # Imports the table from the save file
+    contents = LeagueTableFile.read()
+    leagueTable.clear()
+    leagueTable.append(contents)
+    LeagueTableFile.close()
+  return leagueTable
+  print(leagueTable)
 
 
 def setup():
-  global confirm
-  confirm = False
-  league = input(""" What League do you want to pick a club from to take charge of?
-  1. Premier League
-  2. La Liga
-  3. Bundesliga
-  Enter The Number Below
-  """)
-  if league == "1":
-    global leagueCode
-    leagueCode = "PL"
-    global premierLeague
-    with open("league.txt" , "w") as leagueFile:
-      leagueFile.write("Premier League")
-      leagueFile.close()
-      os.system('clear')
-    print("Which Team?")
-    for i in range(len(premierLeague)):
-      print(str(i) + " " + premierLeague[i])
-    team = input()
-    global playerTeam
-    playerTeam = premierLeague[int(team)]
-    print("You are about to control " + playerTeam)
-    confirmYOrN()
-    with open("team.txt" ,"w") as teamFile:
-      teamFile.write(playerTeam)
-      teamFile.close()
-    return playerTeam
+  complete = False
+  while confirm == False:
+    global confirm
+    confirm = False
+    league = input(""" What League do you want to pick a club from to take charge of?
+    1. Premier League
+    2. La Liga
+    3. Bundesliga
+    Enter The Number Below
+    """)
+    if league == "1": 
+      global leagueCode
+      leagueCode = "PL"
+      global premierLeague
+      with open("league.txt" , "w") as leagueFile:
+        leagueFile.write("Premier League") # saves the league in the league file
+        leagueFile.close()
+        os.system('clear')
+      print("Which Team?")
+      for i in range(len(premierLeague)):
+        print(str(i) + " " + premierLeague[i]) #prints out all of the team options with a corresonding number
+      team = input()
+      global playerTeam
+      playerTeam = premierLeague[int(team)]
+      print("You are about to control " + playerTeam)
+      confirmYOrN() 
+      with open("team.txt" ,"w") as teamFile: #saves the player team to the team txt file
+        teamFile.write(playerTeam)
+        teamFile.close()
+      return playerTeam
     
-  elif league == "2" or "3":
-    print("Set Up coming soon. Read the list of planned leagues in the read me file for what will be coming soon")
-  else:
-    print("Please enter a valid league number")
+    elif league == "2" or "3":
+      print("Set Up coming soon. Read the list of planned leagues in the read me file for what will be coming soon")
+    else:
+      print("Please enter a valid league number")
     
 def confirmYOrN():
   responseValid = False
