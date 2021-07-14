@@ -1,6 +1,8 @@
 import random
 import os
-from csv import reader
+import csv
+
+
 #Veriables
 leagues = ["Premier League" , "La Liga" , "BundesLiga"]
 premierLeague = ["Arsenal" , "Aston Villa" ,"Brentford", "Brighton" , "Burnely" , "Chelsea", "Crystal Palace", "Everton", "Leeds" , "Leicester" , "Liverpool" , "Manchester City" ,"Manchester United" , "Newcastle" , "Norwich", "Southampton" ,"Tottenham", "Watford" ,"West Ham","Wolves"]
@@ -14,6 +16,8 @@ leagueCode = None
 version = "Pre Alpha 1.2"
 playerFixture = None
 playerLeague = ""
+
+
 
 #Algorithims
 def NewOrLoad(): # not in use
@@ -187,13 +191,28 @@ def matchEngine():
   global playerTeam
   global playerFixture
   global matchday
+
   homeTeam = playerFixture[0]
   if playerFixture[2] != "v":
     awayTeam = playerFixture[2]
   else:
     awayTeam = playerFixture[3]
-  
-  
+
+  with open("Probablities/PLproablites.csv" , "r") as probsfile: #Loads csv probs file and saves it to probs array
+    probs = list(csv.reader(probsfile))
+    probsfile.close()
+
+  for i in probs:#Loads the probs for each team
+    if i[0] == homeTeam:
+      homeProb = int(i[1])
+    elif i[0] == awayTeam:
+      awayProb = int(i[1])
+
+  homeScore = random.randint(0, homeProb)#Generates scoreline
+  awayScore = random.randint(0, awayProb)
+  print(homeTeam + " " + str(homeScore) + " - " + str(awayScore) + " " + awayTeam)
+
+
 
 #Logic
 clear()
