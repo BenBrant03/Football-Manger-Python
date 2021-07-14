@@ -4,7 +4,7 @@ import os
 from csv import reader
 #Veriables
 leagues = ["Premier League" , "La Liga" , "BundesLiga"]
-premierLeague = ["Arsenal" , "Aston Villa" , "Brighton" , "Burnely" , "Chelsea", "Crystal Palace", "Everton", "Fulham" , "Leeds" , "Leicester City" , "Liverpool" , "Manchester City" ,"Manchester United" , "Newcastle" , "Shefield United", "Southampton" ,"Tottenham" ,"West Brom" ,"West Ham","Wolves"]
+premierLeague = ["Arsenal" , "Aston Villa" ,"Brentford", "Brighton" , "Burnely" , "Chelsea", "Crystal Palace", "Everton", "Leeds" , "Leicester" , "Liverpool" , "Manchester City" ,"Manchester United" , "Newcastle" , "Norwich", "Southampton" ,"Tottenham", "Watford" ,"West Ham","Wolves"]
 leagueTable =[] #stores league table values
 fixturesList = [] # stores that weeks fixtures
 playerTeam  = None 
