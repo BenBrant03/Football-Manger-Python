@@ -13,6 +13,7 @@ matchday = 1
 leagueCode = None 
 version = "Pre Alpha 1.2"
 playerFixture = None
+playerLeague = ""
 
 #Algorithims
 def NewOrLoad(): # not in use
@@ -56,8 +57,8 @@ def setup():
     Enter The Number Below
     """)
     if league == "1": 
-      global leagueCode
-      leagueCode = "PL"
+      global playerLeague
+      playerLeague = "Premier League"
       global premierLeague
       with open("league.txt" , "w") as leagueFile:
         leagueFile.write("Premier League") # saves the league in the league file
@@ -119,8 +120,8 @@ def premierLeagueTableSetup():
     
 def loadFixtures():
   global matchday
-  global leagueCode
-  with open (str(leagueCode) + "matchday"+str(matchday)+".txt" , "r") as fixtureFile:
+  global playerLeague
+  with open ("fixtures/"+ playerLeague + "/" + str(matchday) +".txt", "r") as fixtureFile:
     global fixturesList
     for line in fixtureFile:
       stripedLine = line.strip()
@@ -192,6 +193,7 @@ def matchEngine():
   else:
     awayTeam = playerFixture[3]
   
+  
 
 #Logic
 clear()
@@ -209,5 +211,6 @@ if playerTeam in premierLeague:
     clear()
     matchdayPage()
     clear()
+    matchEngine()
 
 
