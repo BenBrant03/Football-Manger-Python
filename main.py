@@ -1,5 +1,4 @@
 import random
-from tkinter import *
 import os
 from csv import reader
 #Veriables
@@ -21,12 +20,12 @@ def NewOrLoad(): # not in use
   global new
   validinput = False
   while validinput == True:
-  choice = input("Would you like to load your old or start new\n")
-  if choice.lower == "load":
-    validinput = True
-    load()
-  elif choice.lower == "new"
-    setup()
+    choice = input("Would you like to load your old or start new\n")
+    if choice.lower == "load":
+      validinput = True
+      load()
+    elif choice.lower == "new":
+      setup()
 
 def load(): # not currentlu in use
   with open("team.txt", "r") as teamFile:
@@ -48,9 +47,8 @@ def load(): # not currentlu in use
 
 def setup():
   complete = False
+  confirm = False
   while confirm == False:
-    global confirm
-    confirm = False
     league = input(""" What League do you want to pick a club from to take charge of?
     1. Premier League
     2. La Liga
