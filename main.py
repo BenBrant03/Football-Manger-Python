@@ -5,7 +5,7 @@ import csv
 
 #Veriables
 leagues = ["Premier League" , "La Liga" , "BundesLiga"]
-premierLeague = ["Arsenal" , "Aston Villa" ,"Brentford", "Brighton" , "Burnely" , "Chelsea", "Crystal Palace", "Everton", "Leeds" , "Leicester" , "Liverpool" , "Manchester City" ,"Manchester United" , "Newcastle" , "Norwich", "Southampton" ,"Tottenham", "Watford" ,"West Ham","Wolves"]
+premierLeague = ["Arsenal" , "Aston Villa" ,"Brentford", "Brighton" , "Burnely" , "Chelsea", "Crystal Palace", "Everton", "Leeds" , "Leicester" , "Liverpool" , "ManchesterC" ,"ManchesterU" , "Newcastle" , "Norwich", "Southampton" ,"Tottenham", "Watford" ,"West Ham","Wolves"]
 leagueTable =[] #stores league table values
 fixturesList = [] # stores that weeks fixtures
 playerTeam  = None 
@@ -173,11 +173,10 @@ def matchdayPage():
     print(*i)
   print("Premier League")
   print("Team          Pts")
-  leagueTable.sort()
   for i in leagueTable:
     print(*i)
   while correctInput == False:
-    inputKey = input('Type a to Sim')
+    inputKey = input('Type a to Sim\n')
     if inputKey == 'a':
       correctInput = True
     else:
@@ -191,6 +190,7 @@ def matchEngine():
   global playerTeam
   global playerFixture
   global matchday
+  global leagueTable
 
   homeTeam = playerFixture[0]
   if playerFixture[2] != "v":
@@ -211,6 +211,75 @@ def matchEngine():
   homeScore = random.randint(0, homeProb)#Generates scoreline
   awayScore = random.randint(0, awayProb)
   print(homeTeam + " " + str(homeScore) + " - " + str(awayScore) + " " + awayTeam)
+  
+  if homeScore >= awayScore: # Updates the league table
+    for i in leagueTable:
+      if i[0] == homeTeam:
+        i[1] += 3
+  if awayScore >= homeScore:
+    for i in leagueTable:
+      if i[0] == awayTeam:
+        i[1] += 3
+  if homeScore == awayScore :
+    for i in leagueTable:
+      if i[0] == awayTeam or homeTeam:
+        i[1] += 1
+
+def aiMatchEngine():
+  global fixturesList
+  global matchday
+  global leagueTable
+  for i in fixturesList:
+    homeTeam = i[0]
+    if i[2] != "v":
+      awayTeam = i[2]
+    else:
+      awayTeam = i[3]
+
+    with open("Probablities/PLproablites.csv" , "r") as probsfile: #Loads csv probs file and saves it to probs array
+      probs = list(csv.reader(probsfile))
+      probsfile.close()
+
+    for i in probs:#Loads the probs for each team
+      if i[0] == homeTeam:
+        homeProb = int(i[1])
+      elif i[0] == awayTeam:
+        awayProb = int(i[1])
+
+    homeScore = random.randint(0, homeProb)#Generates scoreline
+    awayScore = random.randint(0, awayProb)
+    print(homeTeam + " " + str(homeScore) + " - " + str(awayScore) + " " + awayTeam)
+  
+    if homeScore >= awayScore: # Updates the league table
+      for i in leagueTable:
+        if i[0] == homeTeam:
+          i[1] += 3
+    elif awayScore >= homeScore:
+      for i in leagueTable:
+        if i[0] == awayTeam:
+          i[1] += 3
+    elif homeScore == awayScore :
+      for i in leagueTable:
+        if i[0] == awayTeam or homeTeam:
+          i[1] += 1
+  leagueTable = (sorted(leagueTable, key=lambda x: x[1], reverse=True))
+  print("")
+  print("")
+  for i in leagueTable:
+    print(*i)
+  moveScreen = False
+  while moveScreen == False:
+    Continue = input("Type a to move to next Matchday\n")
+    if Continue.lower() =="a":
+      Continue = True
+      matchday = 2
+      break
+
+
+  
+
+  
+
 
 
 
@@ -225,11 +294,13 @@ print("""
 setup()
 clear()
 if playerTeam in premierLeague:
-    premierLeagueTableSetup()
-    loadFixtures()
-    clear()
-    matchdayPage()
-    clear()
-    matchEngine()
-
+  premierLeagueTableSetup()
+  loadFixtures()
+  clear()
+  #while matchday <= 38:
+  matchdayPage()
+  clear()
+  matchEngine()
+  aiMatchEngine()
+    
 
