@@ -1,4 +1,4 @@
-Arsenal v Manchester United
+Arsenal v ManchesterU
 Brentford v Tottenham
 Brighton v Southampton
 Burnley v Wolves
@@ -6,5 +6,5 @@ Chelsea v West Ham
 Crystal Palace v Leeds
 Leicester v Aston Villa
 Liverpool v Everton
-Manchester City v Watford
+ManchesterC v Watford
 Norwich v Newcastle United
